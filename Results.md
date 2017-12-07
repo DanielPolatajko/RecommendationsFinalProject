@@ -3,7 +3,6 @@ title: Results
 nav_include: 3
 ---
 
-<code>
 ## Contents
 {:.no_toc}
 *
@@ -18,4 +17,8 @@ nav_include: 3
 
 ## Moving Forward
 
-Some Markdown text with <span style="color:blue">some *blue* text</span></code>
+<span style="color:blue">Dan's</span><span style="color:red">funky</span><span style="color:yellow">multicoloured</span><span style="color:green">sentence</span>
+
+
+
+
