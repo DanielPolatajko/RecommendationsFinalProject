@@ -17,4 +17,4 @@ nav_include: 3
 
 ## Moving Forward
 
-## edit 1 from Dan
+Some Markdown text with <span style="color:blue">some *blue* text</span>
