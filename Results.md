@@ -17,7 +17,7 @@ nav_include: 3
 
 ## Moving Forward
 
-<span style="color:blue">Dan's</span><span style="color:red">funky</span><span style="color:yellow">multicoloured</span><span style="color:green">sentence</span>
+<span style="color:blue">Dan's</span> <span style="color:red">funky</span> <span style="color:purple">multicoloured</span> <span style="color:green">sentence</span>
 
 
 
