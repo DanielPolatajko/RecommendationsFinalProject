@@ -3,6 +3,7 @@ title: Yelp Restaurant Recommendations
 
 ---
 ### Allison Wiggins, Peter Bearse, Christopher Fenaroli, Daniel Polatajko
+### Group 35
 
 
 ![alt text](http://www.practicevelocity.com/wp-content/uploads/2016/08/yelp2.png)
