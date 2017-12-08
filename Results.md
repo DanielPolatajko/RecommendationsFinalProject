@@ -4,8 +4,9 @@ nav_include: 3
 ---
 
 ## Contents
-
-{:toc}
+{:.no_toc}
+*  
+{: toc}
 
 
 
