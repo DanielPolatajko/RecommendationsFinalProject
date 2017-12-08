@@ -51,6 +51,10 @@ Our fourth modeling approach used a neighbor model to attempt to predict ratings
 ### K-Nearest Neighbours Model Graphs
 ![png](graphs/KNN.png)
 
+### Ensemble Model
+
+Our fifth modeling approach applied an ensembling method to combine the results of all of our previous models.  The ensemble method we implemented was a form of stacked regression, where the outputs of the previous models were gathered as predictors and used in a least squares regression on the validation set to deliver a set of weights assigned to each model's outputs.  We then used this regression model to predict ratings for given users and restaurants on the training and validation set, as well as a testing set.
+
 ### Ensemble Model Graphs on Training and Validation Sets
 ![png](graphs/ensembletrainval.png)
 
