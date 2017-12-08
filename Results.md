@@ -6,7 +6,7 @@ nav_include: 3
 ## Contents
 {:.no_toc}
 *
-{: toc}
+{:toc}
 
 
 
