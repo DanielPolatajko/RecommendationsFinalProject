@@ -79,9 +79,16 @@ Strength of the neighbor model:
     
 The neighbour model is advantageous in that it allows for us to define similarities between in a more concrete way than, say, a matrix factorization method - it takes users or items that are similar (by some metric) to the user or item we are attempting to predict, and takes the means of those ratings.  In addition, the ability to implement k-NN as our method in the model gives us a fairly simplistic and nonparametric method, meaning that we don't have to worry about certain assumptions that a regression model might make about the data.
 
+Strength of the ensemble model:
+
+The strength of the ensemble model is that, by utilizing the outputs from all of the previous models, we may be able to average out the biases of each individual method.  These biases could result from overfitting issues, parameter issues, or simply structural issues within the models themselves - once all are combined with their separate biases, however, we would hope that some of the overall bias is mitigated.
+
 
 ## Shortcomings
-test
+Each model has its own weaknesses to consider, and certainly no model achieved results that are particularly noteworthy in terms of their accuracy.  Both of the baseline models are unable to account for important features present in some of the other two models, such as neighboring factors or latent features.  Of course, computational intensity is an issue, leaving us to consider a fairly small number of latent features in our latent factor model (and to limit the number of steps towards convergence for stochastic gradient descent to around forty, when the ideal number would probably be in the thousands).  For the neighbor model, our training data may not have been large enough to fully take advantage of the k-NN algorithm.  For the ensemble method, if some of our models were much better than some of our other ones, then the results of the good models may have been diluted by their ensembling with the bad models.
+
+All of the above are just some examples of how models could have gone wrong and point to avenues for improvement in the future.
+
 
 ## Project Trajectory
 Our project goal stayed fairly similar throughout: build a model to predict Yelp ratings given specific users and specific ratings.  However, some of our implementation methods did change based on and some difficulties with computational intensity.  While the Yelp dataset provided is enormous, we had to use a very small subset of the data due to issues with available memory and computational intensity of some of these methods.  And, while we originally planned to optimize the matrix factorization approach through ALS, we ended up using While ALS had a comparable and sometimes better MSE, the ALS method returned estimates very close to 3.50 (not straying below 3.0, in some cases).  In fact, we got a similar MSE to our ALS method by using an array  filled with nothing but predicted ratings of 3.50 and got a very similar MSE to our ALS approach!  Thus, we implemented the stochastic gradient descent method as we felt it would be more interesting to consider.  
@@ -89,7 +96,9 @@ Our project goal stayed fairly similar throughout: build a model to predict Yelp
 One last aspect of our project that switched trajectories was considering whether to use matrix factorization to predict our baseline residuals or to predict the ratings directly.  Through a number of online and provided resources, it appeared that inputting the ratings directly into the matrix to be factorized (as opposed to the residuals from the baseline estimate) would be more feasible and return stronger results.  In the final analysis, we included both methods. 
 
 ## Moving Forward
-test
+One of the most significant bottlenecks we faced in the development of this prediction model was time. The dataset was very large (`review.json` was originally 3.8 GB and `user.json` was 1.6 GB) and many of the models we ran took hours to finish even on a significantly smaller subsample. Furthermore, in our kNN and matrix factorization models, we saw significant increases in performance in the validation set with larger numbers of nearest neighbors and latent factors but these were associated with longer runtimes as well, forcing us to use smaller parameters than what we believe would have been optimal. With more time or computational power, we would have run these models with better parameters and on more data.
+
+Another interesting next step would be to look at more predictors than just `user_id` and `business_id`. Although `stars_biz` and `average_stars_usr` were by far the best predictors (as shown by our heatmap), there were other dimensions that could have added more insight, such as data like`total_checkins`, interaction terms, and temporal dimensions.
 
 
 
