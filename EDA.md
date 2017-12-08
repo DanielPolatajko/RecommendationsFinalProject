@@ -1340,7 +1340,9 @@ plt.figure()
 ![png](EDA_files/EDA_33_3.png)
 
 
-Of the predictors we chose, `stars_biz` and `average_stars_usr` had by far the strongest relationship with our response variable `stars_rvw`. Many of the predictors were also very multicollinear. As a result, we chose to use `stars_biz` and `average_stars_usr` as our main predictors throughout our modelling. 
+
 
 ![png](EDA_files/heatmap.png)
+
+Of the predictors we chose, `stars_biz` and `average_stars_usr` had by far the strongest relationship with our response variable `stars_rvw`. Many of the predictors were also very multicollinear. As a result, we chose to use `stars_biz` and `average_stars_usr` as our main predictors throughout our modelling. 
 
