@@ -63,7 +63,22 @@ Our fifth modeling approach applied an ensembling method to combine the results 
 
 
 ## Strengths
-test if contents work
+Strength of baseline estimate:
+
+The mean baseline estimate model is advantageous in that it is quite simple to calculate and actually has a significant impact on the accuracy of the predictions; in fact, as noted in one of the references by Edwin Chen, an accurate treatment of "those humble baseline predictors" (such as bias terms) was probably at least as significant as any modeling breakthrough made during the Netflix prize competition.
+
+Strength of regularized regression factorization:
+    
+One strength of a regression baseline model is that thare able to calculate more precise bias estimates than by simply taking the mean for each user's/restaurant's ratings.  Furthermore, the use of cross-validated Ridge regression allows us to include an optimal regularization parameter in order prevent overfitting of the model to the training data (i.e. hopefully the model generalizes better to out-of-sample sets).
+
+Strength of the latent factor model:
+    
+The latent factor model has the advantage of being a hardcore machine learning-style approach to this problem in the sense that it is able to account for a number of important features in the data that are near impossible for us to find otherwise.  For example, it would be extremely difficult for us to make empirical estimates for the association between a user and food spiciness; however, an algorithm such as stochastic gradient descent can create a "latent factor space" which, while difficult for us to interpret, is able to make estimates for such latent features that can boost accuracy.
+
+Strength of the neighbor model:
+    
+The neighbour model is advantageous in that it allows for us to define similarities between in a more concrete way than, say, a matrix factorization method - it takes users or items that are similar (by some metric) to the user or item we are attempting to predict, and takes the means of those ratings.  In addition, the ability to implement k-NN as our method in the model gives us a fairly simplistic and nonparametric method, meaning that we don't have to worry about certain assumptions that a regression model might make about the data.
+
 
 ## Shortcomings
 test

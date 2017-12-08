@@ -1185,7 +1185,7 @@ df_rest_all.head()
 
 
 
-## Exploratory Viz
+## Exploratory Visualisation
 
 ### Review Count
 
