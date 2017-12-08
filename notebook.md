@@ -5,6 +5,9 @@ nav_include: 4
 ---
 
 
+
+
+
 ```python
 import numpy as np
 import pandas as pd
@@ -30,6 +33,7 @@ np.random.seed(100)
 
 
 ```python
+# reading in business and checkin data in their entiretiy
 df_biz = pd.read_json('data/business.json', lines = True)
 df_check = pd.read_json('data/checkin.json', lines = True)
 ```
@@ -111,7 +115,7 @@ df_check_subset = df_check[df_check['business_id'].isin(df_biz_subset['business_
 
 
 ```python
-# 64301 unique businesses out of 1880087 total reviews (average 3 reviews for every restaurant)
+# 27631 unique businesses out of 47691 total reviews
 print("The total number of unique recorded businesses in this sample is: ", len(df_rvw_subset['business_id'].unique()))
 print("The total number of unique recorded users in this sample is: ", len(df_usr_subset['user_id'].unique()))
 print("The total number of recorded reviews in this sample is: ", df_rvw_subset.shape[0])
@@ -123,19 +127,14 @@ print("The total number of recorded reviews in this sample is: ", df_rvw_subset.
     The total number of recorded reviews in this sample is:  47691
     
 
-
-
-```python
-# check data types for any abnormalities (objects that should be floats, missing values, etc.)
-# nothing looks too strange - data appears pretty clear
-```
+After checking for abnormalities (objects that should be floats, missing values, etc.) we conclude that nothing looks too strange and that we can continue with our manipulation.
 
 
 
 
-```python
-df_biz_subset.dtypes
-```
+
+
+
 
 
 
@@ -162,9 +161,6 @@ df_biz_subset.dtypes
 
 
 
-```python
-df_rvw_subset.dtypes
-```
 
 
 
@@ -185,9 +181,6 @@ df_rvw_subset.dtypes
 
 
 
-```python
-df_usr_subset.dtypes
-```
 
 
 
@@ -221,9 +214,6 @@ df_usr_subset.dtypes
 
 
 
-```python
-pd.isnull(df_rvw_subset).sum()
-```
 
 
 
@@ -244,10 +234,6 @@ pd.isnull(df_rvw_subset).sum()
 
 
 
-```python
-# null for latitude and longitude?
-pd.isnull(df_biz_subset).sum()
-```
 
 
 
@@ -274,9 +260,6 @@ pd.isnull(df_biz_subset).sum()
 
 
 
-```python
-pd.isnull(df_usr_subset).sum()
-```
 
 
 
@@ -407,9 +390,6 @@ df_rest = df_rest_all[df_rest_all['user_id'].isin(usr_rvw_appearances[usr_rvw_ap
 
 
 
-```python
-df_rest.to_pickle('df_rest_constant.pickle')
-```
 
 
 
@@ -428,6 +408,10 @@ print("The number of reviews in this sample is: ", df_rest.shape[0])
     
 
 # TRAIN - VALIDATE - TEST SPLIT
+
+We now split the data into three distinct partitions: `df_train`, `df_validate`, and `df_test`. Our individual models will all be fit on `df_train`, parameters tuned on `df_validate` (cross-validation proved too computationally heavy to be worth it), and finally evaluated on `df_test`. To preserve the integrity of the testing set we will not look at any results or train any models on the data and only use it to evaluate our ensemble and indivdual models at the very end.
+
+Furthermore, because we are predicting reviews based on the user and business involved, it helps a lot to have some continuity in terms of these variables between the three partitions. To do this we split the sets by first grouping the original data by `user_id` and then sampling from these groups. This ensures every user is featured in every partition. Then we cut all reviews from the validation and testing sets that are for businesses not featured in the training set.
 
 
 
@@ -458,23 +442,24 @@ print (len(df_train), len(df_validate), len(df_test))
 
 # BASELINE MODEL
 
-Dropped restaurants from test set that were not in train set. 
 
-Took some plotting code from http://nbviewer.jupyter.org/github/cs109/content/blob/master/HW4_solutions.ipynb.
 
 
 
 ```python
 # function to get baseline mean model given training and test dataframes
 def baseline_model(df_train, df_test):
-    # take intercept, user bias terms, and restaurant bias terms
+    # intercept is defined as mean of all reviews
     global_est = df_train['stars_rvw'].mean()
+    # user bias is mean of all reviews for a specific user, minus the global mean
     user_biases = df_train.groupby('user_id')['stars_rvw'].mean() - global_est
+    # business bias is mean of all reviews for a specific business, minus the global mean
     rest_biases = df_train.groupby('business_id')['stars_rvw'].mean() - global_est
     
     gamma = rest_biases[df_test['business_id']].dropna()
     theta = user_biases[df_test[df_test['business_id'].isin(gamma.index)]['user_id']].dropna()
 
+    # the prediction is the global mean plus the biases for the user and business
     prediction = global_est + theta.values + gamma.values
         
     return pd.DataFrame([df_test['user_id'].values, df_test['business_id'].values, 
@@ -569,6 +554,7 @@ baseline_results_train.head()
 ```python
 # function to plot model predictions as compared to what predictions should be
 # the better the model is, the closer the dotted red line is to the green line
+# the red zone represents a 1 SD interval of predicted ratings for a given actual rating
 
 def show_results_RMSE(pred, actual, name = '', ax = None):
     
@@ -616,7 +602,7 @@ show_results_RMSE(baseline_results_validate['pred'],
     
 
 
-![png](Project_NB_Commented_files/Project_NB_Commented_30_1.png)
+![png](Final_Project_Notebook_files/Final_Project_Notebook_31_1.png)
 
 
 # REGULARIZED REGRESSION
@@ -749,13 +735,13 @@ show_results_RMSE(baseline_regression_results_validate['pred'],
     
 
 
-![png](Project_NB_Commented_files/Project_NB_Commented_34_1.png)
+![png](Final_Project_Notebook_files/Final_Project_Notebook_35_1.png)
 
 
 
 
 ```python
-# add relevant columns to all sets
+# now that we have baseline predictions and their respective residuals, we can add them to all sets
 
 df_train['baseline_residual'] = (baseline_regression_results_train['actual'] - \
                                 baseline_regression_results_train['pred']).astype(float)
@@ -772,6 +758,8 @@ df_test['baseline_pred'] = baseline_regression_results_test['pred'].astype(float
 
 
 # MATRIX FACTORIZATION - TRAIN/TEST - STARS
+
+We will first try matrix factorization using the observed rating as our response variable. We will train models on `df_train` using `[5, 10, 20]` latent factors and choose the best one based on performance within the validation set.
 
 
 
@@ -1039,10 +1027,14 @@ show_results_RMSE(mf_results_validate_20['pred'],
     
 
 
-![png](Project_NB_Commented_files/Project_NB_Commented_40_1.png)
+![png](Final_Project_Notebook_files/Final_Project_Notebook_42_1.png)
 
+
+`K = 20` latent factors performed the best.
 
 # MATRIX FACTORIZATION - TRAIN/TEST - RESIDUALS
+
+We will now try matrix factorization using baseline residuals as our response variable. We will train models on `df_train` using `[5, 10, 20]` latent factors and choose the best one based on performance within the validation set.
 
 
 
@@ -1187,10 +1179,14 @@ show_results_RMSE(mf_results_validate_resid_20['pred'],
     
 
 
-![png](Project_NB_Commented_files/Project_NB_Commented_44_1.png)
+![png](Final_Project_Notebook_files/Final_Project_Notebook_47_1.png)
 
+
+`K = 20` latent factors performed the best.
 
 # k-NN
+
+For our k-NearestNeighbors model we used Ks of `[2, 5, 10]` and evaluated them on the `df_validate` partition. Our predictor variables were binary indicators of all of the restaurants and users.
 
 
 
@@ -1295,8 +1291,10 @@ show_results_RMSE(knn_results_validate_10['pred'],
     
 
 
-![png](Project_NB_Commented_files/Project_NB_Commented_47_1.png)
+![png](Final_Project_Notebook_files/Final_Project_Notebook_51_1.png)
 
+
+Running the model on the validation set shows that `K = 10` performed the best.
 
 # ENSEMBLE - STACKED REGRESSION
 
@@ -1362,7 +1360,7 @@ show_results_RMSE(e_pred_validate, all_results_validate['Actual'],
     
 
 
-![png](Project_NB_Commented_files/Project_NB_Commented_51_1.png)
+![png](Final_Project_Notebook_files/Final_Project_Notebook_56_1.png)
 
 
 
@@ -1379,5 +1377,5 @@ show_results_RMSE(e_pred_test, all_results_test['Actual'], name = 'Ensemble Test
     
 
 
-![png](Project_NB_Commented_files/Project_NB_Commented_52_1.png)
+![png](Final_Project_Notebook_files/Final_Project_Notebook_57_1.png)
 
