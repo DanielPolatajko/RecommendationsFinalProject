@@ -1214,12 +1214,6 @@ plt.figure()
 
 
 
-
-    <matplotlib.figure.Figure at 0x12d835908>
-
-
-
-
 ![png](EDA_files/EDA_24_1.png)
 
 
@@ -1264,12 +1258,6 @@ plt.grid(axis = 'y', color ='white', linestyle='-')
 plt.title("Review Count per Restaurant");
 plt.figure()
 ```
-
-
-
-
-
-    <matplotlib.figure.Figure at 0x165f54978>
 
 
 
