@@ -1345,13 +1345,6 @@ plt.figure()
 
 
 
-
-
-    <matplotlib.figure.Figure at 0x12a02d1d0>
-
-
-
-
 ![png](EDA_files/EDA_33_2.png)
 
 
@@ -1359,9 +1352,5 @@ plt.figure()
 ![png](EDA_files/EDA_33_3.png)
 
 
+![png](EDA_files/heatmap.png)
 
-    <matplotlib.figure.Figure at 0x129b316d8>
-
-
-
-    <matplotlib.figure.Figure at 0x12a02d1d0>

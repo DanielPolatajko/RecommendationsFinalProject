@@ -83,6 +83,11 @@ The neighbour model is advantageous in that it allows for us to define similarit
 ## Shortcomings
 test
 
+## Project Trajectory
+Our project goal stayed fairly similar throughout: build a model to predict Yelp ratings given specific users and specific ratings.  However, some of our implementation methods did change based on and some difficulties with computational intensity.  While the Yelp dataset provided is enormous, we had to use a very small subset of the data due to issues with available memory and computational intensity of some of these methods.  And, while we originally planned to optimize the matrix factorization approach through ALS, we ended up using While ALS had a comparable and sometimes better MSE, the ALS method returned estimates very close to 3.50 (not straying below 3.0, in some cases).  In fact, we got a similar MSE to our ALS method by using an array  filled with nothing but predicted ratings of 3.50 and got a very similar MSE to our ALS approach!  Thus, we implemented the stochastic gradient descent method as we felt it would be more interesting to consider.  
+
+One last aspect of our project that switched trajectories was considering whether to use matrix factorization to predict our baseline residuals or to predict the ratings directly.  Through a number of online and provided resources, it appeared that inputting the ratings directly into the matrix to be factorized (as opposed to the residuals from the baseline estimate) would be more feasible and return stronger results.  In the final analysis, we included both methods. 
+
 ## Moving Forward
 test
 
