@@ -131,168 +131,6 @@ After checking for abnormalities (objects that should be floats, missing values,
 
 
 
-
-
-
-
-
-
-
-
-
-    address          object
-    attributes       object
-    business_id      object
-    categories       object
-    city             object
-    hours            object
-    is_open           int64
-    latitude        float64
-    longitude       float64
-    name             object
-    neighborhood     object
-    postal_code      object
-    review_count      int64
-    stars           float64
-    state            object
-    dtype: object
-
-
-
-
-
-
-
-
-
-
-    business_id            object
-    cool                    int64
-    date           datetime64[ns]
-    funny                   int64
-    review_id              object
-    stars                   int64
-    text                   object
-    useful                  int64
-    user_id                object
-    dtype: object
-
-
-
-
-
-
-
-
-
-
-    average_stars         float64
-    compliment_cool         int64
-    compliment_cute         int64
-    compliment_funny        int64
-    compliment_hot          int64
-    compliment_list         int64
-    compliment_more         int64
-    compliment_note         int64
-    compliment_photos       int64
-    compliment_plain        int64
-    compliment_profile      int64
-    compliment_writer       int64
-    cool                    int64
-    elite                  object
-    fans                    int64
-    friends                object
-    funny                   int64
-    name                   object
-    review_count            int64
-    useful                  int64
-    user_id                object
-    yelping_since          object
-    dtype: object
-
-
-
-
-
-
-
-
-
-
-    business_id    0
-    cool           0
-    date           0
-    funny          0
-    review_id      0
-    stars          0
-    text           0
-    useful         0
-    user_id        0
-    dtype: int64
-
-
-
-
-
-
-
-
-
-
-    address         0
-    attributes      0
-    business_id     0
-    categories      0
-    city            0
-    hours           0
-    is_open         0
-    latitude        0
-    longitude       0
-    name            0
-    neighborhood    0
-    postal_code     0
-    review_count    0
-    stars           0
-    state           0
-    dtype: int64
-
-
-
-
-
-
-
-
-
-
-    average_stars         0
-    compliment_cool       0
-    compliment_cute       0
-    compliment_funny      0
-    compliment_hot        0
-    compliment_list       0
-    compliment_more       0
-    compliment_note       0
-    compliment_photos     0
-    compliment_plain      0
-    compliment_profile    0
-    compliment_writer     0
-    cool                  0
-    elite                 0
-    fans                  0
-    friends               0
-    funny                 0
-    name                  0
-    review_count          0
-    useful                0
-    user_id               0
-    yelping_since         0
-    dtype: int64
-
-
-
-
-
 ```python
 # this dataframe contains every review, paired with the user who gave the review and the business that was reviewed
 df_rvw_usr = df_usr_subset.merge(df_rvw_subset, on = 'user_id', how = 'left')
@@ -386,10 +224,6 @@ df_rest_all = get_desired_restaurants(df_all, ['Food', 'Restaurants'])
 usr_rvw_appearances = df_rest_all['user_id'].value_counts()
 df_rest = df_rest_all[df_rest_all['user_id'].isin(usr_rvw_appearances[usr_rvw_appearances>=10].index)]
 ```
-
-
-
-
 
 
 
@@ -602,7 +436,7 @@ show_results_RMSE(baseline_results_validate['pred'],
     
 
 
-![png](Final_Project_Notebook_files/Final_Project_Notebook_31_1.png)
+![png](Final_Project_NB_Trimmed_files/Final_Project_NB_Trimmed_23_1.png)
 
 
 # REGULARIZED REGRESSION
@@ -735,7 +569,7 @@ show_results_RMSE(baseline_regression_results_validate['pred'],
     
 
 
-![png](Final_Project_Notebook_files/Final_Project_Notebook_35_1.png)
+![png](Final_Project_NB_Trimmed_files/Final_Project_NB_Trimmed_27_1.png)
 
 
 
@@ -1027,7 +861,7 @@ show_results_RMSE(mf_results_validate_20['pred'],
     
 
 
-![png](Final_Project_Notebook_files/Final_Project_Notebook_42_1.png)
+![png](Final_Project_NB_Trimmed_files/Final_Project_NB_Trimmed_34_1.png)
 
 
 `K = 20` latent factors performed the best.
@@ -1179,7 +1013,7 @@ show_results_RMSE(mf_results_validate_resid_20['pred'],
     
 
 
-![png](Final_Project_Notebook_files/Final_Project_Notebook_47_1.png)
+![png](Final_Project_NB_Trimmed_files/Final_Project_NB_Trimmed_39_1.png)
 
 
 `K = 20` latent factors performed the best.
@@ -1291,7 +1125,7 @@ show_results_RMSE(knn_results_validate_10['pred'],
     
 
 
-![png](Final_Project_Notebook_files/Final_Project_Notebook_51_1.png)
+![png](Final_Project_NB_Trimmed_files/Final_Project_NB_Trimmed_43_1.png)
 
 
 Running the model on the validation set shows that `K = 10` performed the best.
@@ -1360,7 +1194,7 @@ show_results_RMSE(e_pred_validate, all_results_validate['Actual'],
     
 
 
-![png](Final_Project_Notebook_files/Final_Project_Notebook_56_1.png)
+![png](Final_Project_NB_Trimmed_files/Final_Project_NB_Trimmed_48_1.png)
 
 
 
@@ -1377,5 +1211,4 @@ show_results_RMSE(e_pred_test, all_results_test['Actual'], name = 'Ensemble Test
     
 
 
-![png](Final_Project_Notebook_files/Final_Project_Notebook_57_1.png)
-
+![png](Final_Project_NB_Trimmed_files/Final_Project_NB_Trimmed_49_1.png)
