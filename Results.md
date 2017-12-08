@@ -14,7 +14,9 @@ nav_include: 3
 
 
 ## Preferred Models
-In our approach to creating a rating system for Yelp users and restaurants, we looked at a number of different models to predict the ratings that certain users would give a certain restaurants.  The approaches we took to create these models were the following: a baseline estimate derived by taking the means of specific user ratings and specific restaurant ratings as bias terms, a baseline estimate derived by using Ridge regression to fit the individual bias terms for each user and each restaurant, a latent factor estimate optimized via an implementation of matrix factorization and stochastic gradient descent, a neighbor model fit using the k-nearest neighbors algorithm, and an ensemble regression method to combine the results of some of the previous models.
+In our approach to creating a rating system for Yelp users and restaurants, we looked at a number of different models to predict the ratings that certain users would give a certain restaurants.  The approaches we took to create these models were the following: a baseline estimate derived by taking the means of specific user ratings and specific restaurant ratings as bias terms, a baseline estimate derived by using Ridge regression to fit the individual bias terms for each user and each restaurant, a latent factor estimate optimized via an implementation of matrix factorization and stochastic gradient descent, a neighbor model fit using the k-nearest neighbors algorithm, and an ensemble regression method to combine the results of some of the previous models. All of the plots below are predicted-actual scatterplots to compare the actual values in the data to our predicted values.  The dotted red line represents the mean of the predictions at a given actual rating.  The red zone represents a one standard-deviation interval of predicted ratings for a given actual rating.  The better the model is, the more closely the red line should match the green line and the tighter the red zone should be.
+
+
 
 ### Baseline Model 
 Our modeling process began with two baseline estimates.  The first of these two attempted to predict the rating by a given user for a given business via a model of the form $$\hat{Y}_{um} = \mu + \theta_u + \gamma_m$$,where $\hat{Y}_{um}$ represents the rating of restaurant $m$ by user $u$, $\mu$ represents an intercept term, $\theta_u$ represents the bias of user $u$, and $\gamma_m$ represents the bias of restaurant $m$.  For example, a user might be biased in that they tend to generally rate restaurants higher than other users, or a restaurant might be biased in that it tends to be rated lower than other restaurants.
@@ -48,6 +50,7 @@ In all, we look to minimize the loss function $$e^2_{um} = (Y_{um} - \sum_{k=1}^
 
 Our fourth modeling approach used a neighbor model to attempt to predict ratings based on user and restaurant associations with their nearest neighbors.  To implement this neighbor model, we used sklearn's KNeighborsRegressor method, which performs regression based on a k-NN algorithm.  We one-hot encoded the users and restaurants as we did in the Ridge regression model.  We then fit the k-NN regressor on the training set and used it to make predictions for ratings given a specific user and restaurant.
 
+Note that as we increase $k$ here, the slope deviates further from the green line, indicating that the model is less effective
 ### K-Nearest Neighbours Model Graphs
 ![png](graphs/KNN.png)
 
