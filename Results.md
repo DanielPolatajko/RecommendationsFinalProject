@@ -32,7 +32,11 @@ To estimate these bias vectors in the regression baseline, we one-hot encoded th
 ### Regularised Regression Model Graphs
 ![png](graphs/regularisedregression.png)
 
-### Matrix Factorisation on Stars Model
+### Matrix Factorisation  Model
+
+Our third modeling approach used a latent factor model to attempt to predict ratings based on latent features between users and restaurants.  Latent features are interactions between users and properties of restaurants that may be significant in determining a rating - for example, a user may have a penchant for spicy food or cheap prices.  Given a matrix of restaurant ratings $R$ with users as rows and restaurants as columns, we can attempt to decompose this matrix into the form $P \times Q^T$, where each row of $P$ represents the associations between a user and a latent feature and each row of $Q$ represents the associations between a restaurant and a latent feature.  Of course, we do not know what the numerical values for these associations are - thus, we estimate them through this matrix factorization via optimizing by a stochastic gradient descent method.
+
+In all, we look to minimize the loss function $e^2_{um} = (Y_{um} - \sum_{k=1}^K{p_{uk}q_{kj}})^2 + \frac{\beta}{2}\sum_{k=1}^K{||P||^2 + ||Q^2||}$, where the second term represents a regularization to prevent from overfitting on the user and restaurant data in P and Q.  We perform this minimization through an implementation of stochastic gradient descent, which iterates through loops to take the partial gradients for $p$ and $q$, create an update rule for each iteration, and update the values of each $p$ and $q$ according to our previous estimates and the new update rule.  After enough iterations, the process converges on estimates for the latent feature associations, which can be converted back into a full predicted ratings matrix $R$.  Due to runtime issues, we could not achieve absolute convergence with stochastic gradient descent and limited the number of iterations.
 
 ### Matrix Factorisation on Stars Model Graphs
 ![png](graphs/matfactstars.png)
@@ -40,7 +44,11 @@ To estimate these bias vectors in the regression baseline, we one-hot encoded th
 ### Matrix Factorisation on Residuals Model Graphs
 ![png](graphs/matfactresid.png)
 
-### K Nearest Neighbours Model Graphs
+### K-Nearest Neighbours Model
+
+Our fourth modeling approach used a neighbor model to attempt to predict ratings based on user and restaurant associations with their nearest neighbors.  To implement this neighbor model, we used sklearn's KNeighborsRegressor method, which performs regression based on a k-NN algorithm.  We one-hot encoded the users and restaurants as we did in the Ridge regression model.  We then fit the k-NN regressor on the training set and used it to make predictions for ratings given a specific user and restaurant.
+
+### K-Nearest Neighbours Model Graphs
 ![png](graphs/KNN.png)
 
 ### Ensemble Model Graphs on Training and Validation Sets
@@ -55,8 +63,6 @@ To estimate these bias vectors in the regression baseline, we one-hot encoded th
 ## Shortcomings
 
 ## Moving Forward
-
-<span style="color:blue">Dan's</span> <span style="color:red">funky</span> <span style="color:purple">multicoloured</span> <span style="color:green">sentence</span>
 
 
 
