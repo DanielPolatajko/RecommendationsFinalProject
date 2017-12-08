@@ -12,25 +12,25 @@ nav_include: 3
 We implemented three separate models that predicted how users would rate restaurants. The first of these, our base model
 
 ### Base Model Graphs
-![png](basemodel.png)
+![png](graphs/basemodel.png)
 
 ### Regularised Regression Model Graphs
-![png](regularisedregression.png)
+![png](graphs/regularisedregression.png)
 
 ### Matrix Factorisation on Stars Model Graphs
-![png](matfactstars.png)
+![png](graphs/matfactstars.png)
 
 ### Matrix Factorisation on Residuals Model Graphs
-![png](matfactresid.png)
+![png](graphs/matfactresid.png)
 
 ### K Nearest Neighbours Model Graphs
-![png](KNN.png)
+![png](graphs/KNN.png)
 
 ### Ensemble Model Graphs on Training and Validation Sets
-![png](ensembletrainval.png)
+![png](graphs/ensembletrainval.png)
 
 ### Ensemble Model Graphs on Test Set
-![png](ensembletest.png)
+![png](graphs/ensembletest.png)
 
 
 ## Strengths
